@@ -1,5 +1,7 @@
 package br.com.caelum.agiletickets.models;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,8 +28,21 @@ public class SessaoTest {
 	public void reservarIngressosDeveDiminuirONumeroDeIngressosDisponiveis() throws Exception {
 		Sessao sessao = new Sessao();
 		sessao.setTotalIngressos(5);
-
-		sessao.reserva(3);
-		Assert.assertEquals(2, sessao.getIngressosDisponiveis().intValue());
+		
+		sessao.reserva(5);
+		
+		int totalReservados = sessao.getIngressosReservados();
+		
+		assertEquals(0, sessao.getIngressosDisponiveis().intValue());
+	}
+	
+	@Test
+	public void testeIngressosDisponiveis() throws Exception {
+		Sessao sessao = new Sessao();
+		sessao.setTotalIngressos(1);
+		
+		boolean reserva = sessao.podeReservar(1);
+		
+		Assert.assertTrue(reserva);
 	}
 }

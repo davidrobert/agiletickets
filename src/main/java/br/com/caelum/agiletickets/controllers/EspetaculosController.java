@@ -122,6 +122,7 @@ public class EspetaculosController {
 		return espetaculo;
 	}
 
+	@SuppressWarnings("unused")
 	private Estabelecimento criaEstabelecimento(Long id) {
 		return estabelecimentos.todos().get(0);
 	}
