@@ -16,6 +16,4 @@ public enum Periodicidade {
 	private Periodicidade(int days) {
 		this.days = days;
 	}
-	
-	
 }
