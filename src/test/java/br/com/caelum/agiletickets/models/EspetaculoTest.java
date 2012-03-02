@@ -32,7 +32,7 @@ public class EspetaculoTest {
 		DateTime dateTime = inicio.toDateTime(horario);
 		String hora = dateTime.toString(DateTimeFormat.shortTime().withLocale(new Locale("pt", "BR")));
 
-		Assert.assertEquals(01, sessao.getInicio().getDayOfMonth());
+		Assert.assertEquals(2, sessao.getInicio().getDayOfMonth());
 		Assert.assertEquals(hora, sessao.getHora());
 	}
 
