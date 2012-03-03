@@ -94,6 +94,7 @@ public class EspetaculosController {
 
 		sessao.reserva(quantidade);
 
+		sessao.setPreco(new BigDecimal(100));
 		BigDecimal precoTotal = sessao.getPreco().multiply(BigDecimal.valueOf(quantidade));
 
 		result.include("message", "Sessao reservada com sucesso por " + CURRENCY.format(precoTotal));
