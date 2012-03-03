@@ -80,7 +80,6 @@ public class EspetaculosController {
 		reserva(sessaoId, quantidade, TipoDesconto.NORMAL);
 	}
 
-	@Post @Path("/sessao/{sessaoId}/reserva")
 	public void reserva(Long sessaoId, final Integer quantidade, TipoDesconto desconto) {
 		Sessao sessao = agenda.sessao(sessaoId);
 		if (sessao == null) {
