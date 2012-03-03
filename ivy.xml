@@ -34,5 +34,7 @@
 		<dependency org="org.mortbay.jetty" name="jsp-api-2.1" rev="6.1.14" conf="jetty->default" />
 		<dependency org="org.mortbay.jetty" name="jsp-2.1" rev="6.1.14" conf="jetty->default" />
 		<dependency org="org.mortbay.jetty" name="jetty-ant" rev="6.1.14" conf="jetty->default" />
+		<dependency org="org.codehaus.mojo" name="selenium-maven-plugin" rev="2.2"/>
+            
 	</dependencies>
 </ivy-module>
