@@ -16,6 +16,7 @@ import br.com.caelum.agiletickets.models.Espetaculo;
 import br.com.caelum.agiletickets.models.Estabelecimento;
 import br.com.caelum.agiletickets.models.Periodicidade;
 import br.com.caelum.agiletickets.models.Sessao;
+import br.com.caelum.agiletickets.models.TipoDesconto;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
@@ -76,6 +77,10 @@ public class EspetaculosController {
 
 	@Post @Path("/sessao/{sessaoId}/reserva")
 	public void reserva(Long sessaoId, final Integer quantidade) {
+		reserva(sessaoId, quantidade, TipoDesconto.NORMAL);
+	}
+
+	public void reserva(Long sessaoId, final Integer quantidade, TipoDesconto desconto) {
 		Sessao sessao = agenda.sessao(sessaoId);
 		if (sessao == null) {
 			result.notFound();
@@ -94,14 +99,17 @@ public class EspetaculosController {
 
 		sessao.reserva(quantidade);
 
-		sessao.setPreco(new BigDecimal(100));
-		BigDecimal precoTotal = sessao.getPreco().multiply(BigDecimal.valueOf(quantidade));
+		BigDecimal preco = sessao.getPreco();
+		BigDecimal percentual = new BigDecimal(desconto.getPercentualDesconto());
+		preco = preco.subtract(preco.multiply(percentual));
+		
+		BigDecimal precoTotal = preco.multiply(BigDecimal.valueOf(quantidade));
 
 		result.include("message", "Sessao reservada com sucesso por " + CURRENCY.format(precoTotal));
 
 		result.redirectTo(IndexController.class).index();
 	}
-
+	
 	@Get @Path("/espetaculo/{espetaculoId}/sessoes")
 	public void sessoes(Long espetaculoId) {
 		Espetaculo espetaculo = carregaEspetaculo(espetaculoId);
@@ -135,4 +143,6 @@ public class EspetaculosController {
 	private Estabelecimento criaEstabelecimento(Long id) {
 		return estabelecimentos.todos().get(0);
 	}
+
+	
 }

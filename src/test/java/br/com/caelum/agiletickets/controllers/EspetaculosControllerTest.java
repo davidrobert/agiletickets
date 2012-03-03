@@ -1,11 +1,12 @@
 package br.com.caelum.agiletickets.controllers;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
+
+import java.math.BigDecimal;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import br.com.caelum.agiletickets.domain.Agenda;
 import br.com.caelum.agiletickets.domain.DiretorioDeEstabelecimentos;
 import br.com.caelum.agiletickets.models.Espetaculo;
 import br.com.caelum.agiletickets.models.Sessao;
+import br.com.caelum.agiletickets.models.TipoDesconto;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.util.test.MockResult;
@@ -103,10 +105,24 @@ public class EspetaculosControllerTest {
 	public void deveReservarSeASessaoTemIngressosSuficientes() throws Exception {
 		Sessao sessao = new Sessao();
 		sessao.setTotalIngressos(5);
+		sessao.setPreco(new BigDecimal(100));
 
 		when(agenda.sessao(1234l)).thenReturn(sessao);
-
+		
 		controller.reserva(1234l, 3);
+
+		assertThat(sessao.getIngressosDisponiveis(), is(2));
+	}
+	
+	@Test
+	public void deveReservarComDescontoParaEstudanteSeASessaoTemIngressosSuficientes() throws Exception {
+		Sessao sessao = new Sessao();
+		sessao.setTotalIngressos(5);
+		sessao.setPreco(new BigDecimal(100));
+		
+		when(agenda.sessao(1234l)).thenReturn(sessao);
+		
+		controller.reserva(1234l, 3, TipoDesconto.ESTUDANTE);
 
 		assertThat(sessao.getIngressosDisponiveis(), is(2));
 	}
