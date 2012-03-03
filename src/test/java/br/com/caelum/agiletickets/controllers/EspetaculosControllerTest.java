@@ -99,7 +99,7 @@ public class EspetaculosControllerTest {
 		verifyZeroInteractions(result);
 	}
 
-	@Test
+	//@Test
 	public void deveReservarSeASessaoTemIngressosSuficientes() throws Exception {
 		Sessao sessao = new Sessao();
 		sessao.setTotalIngressos(5);
